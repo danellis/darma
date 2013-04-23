@@ -28,7 +28,7 @@ void dumpRam(Cpu cpu, int start, int count) {
 void dumpRegs(Cpu cpu) {
   List<String> regs = [];
   for (int r = 0; r <= 15; ++r ) {
-    regs.add("R$r = ${cpu.reg[r].toRadixString(16)}");
+    regs.add("R$r=${cpu.reg[r].toRadixString(16)}");
   }
   print(regs.join(', '));
 }
