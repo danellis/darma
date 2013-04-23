@@ -196,98 +196,77 @@ class Cpu {
   
   void dataProc(int opcode, int s, int rd, int rn, int operand) {
     print("dataProc: opcode=$opcode, s=$s, Rd=$rd, Rn=$rn, operand=$operand");
+    int result;
+    
     switch (opcode) {
       case 0: // AND
-        int result = reg[rn] & operand; 
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] & operand;
+        continue store;
       
       case 1: // EOR
-        int result = reg[rn] ^ operand;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] ^ operand;
+        continue store;
       
       case 2: // SUB
-        int result = reg[rn] - operand;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] - operand;
+        continue store;
         
       case 3: // RSB
-        int result = operand - reg[rn];
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = operand - reg[rn];
+        continue store;
         
       case 4: // ADD
-        int result = reg[rn] + operand;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] + operand;
+        continue store;
         
       case 5: // ADC
-        int result = reg[rn] + operand /* FIXME: + carry flag */;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] + operand /* FIXME: + carry flag */;
+        continue store;
         
       case 6: // SBC
-        int result = reg[rn] - operand /* FIXME: - (1 - carry flag) */;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] - operand /* FIXME: - (1 - carry flag) */;
+        continue store;
         
       case 7: // RSC
-        int result = operand - reg[rn] /* FIXME: - (1 - carry flag) */;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = operand - reg[rn] /* FIXME: - (1 - carry flag) */;
+        continue store;
         
       case 8: // TST
-        int result = rn & operand;
-        updateFlags(result);
+        updateFlags(rn & operand);
         break;
         
       case 9: // TEQ
-        int result = rn ^ operand;
-        updateFlags(result);
+        updateFlags(rn ^ operand);
         break;
         
       case 10: // CMP
-        int result = rn - operand;
-        updateFlags(result);
+        updateFlags(rn - operand);
         break;
         
       case 11: // CMN
-        int result = rn + operand;
-        updateFlags(result);
+        updateFlags(rn + operand);
         break;
         
       case 12: // ORR
-        int result = reg[rn] | operand;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] | operand;
+        continue store;
         
       case 13: // MOV
-        int result = operand;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = operand;
+        continue store;
         
       case 14: // BIC
-        int result = reg[rn] & ~operand;
-        reg[rd] = result;
-        if (s == 1) updateFlags(result);
-        break;
+        result = reg[rn] & ~operand;
+        continue store;
         
       case 15: // MVN
-        int result = ~operand;
+        result = ~operand;
+        continue store;
+      
+    store:
+      default:
         reg[rd] = result;
         if (s == 1) updateFlags(result);
-        break;
     }
   }
   
