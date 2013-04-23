@@ -10,11 +10,8 @@
     b . // IRQ
     b . // FIQ
 
-.string "Armem test binary"
-.align 4
-
 reset:
-    mov r0, #10
+    mov r0, #1024
     subs r0, r0, #1
     bne reset
     swi 1

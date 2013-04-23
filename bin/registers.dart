@@ -69,7 +69,8 @@ class RegisterFile {
   
   int operator [](int register) {
     int mode = registers[CPSR] & 0xf; // Ignoring bit 4
-    return registers[registerMap[mode][register]];
+    int value = registers[registerMap[mode][register]];
+    return register == 15 ? value + 8 : value;
   }
   
   void operator []=(int register, int value) {
