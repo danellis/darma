@@ -4,9 +4,9 @@ import 'dart:typeddata';
 import 'dart:io';
 import 'dart:async';
 
-part 'cpu.dart';
-part 'registers.dart';
-part 'decoder.dart';
+part '../lib/src/cpu.dart';
+part '../lib/src/registers.dart';
+part '../lib/src/decoder.dart';
 
 void main() {
   var cpu = new Cpu();
