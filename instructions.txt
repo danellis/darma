@@ -1,0 +1,19 @@
+cond:4 000 opcode:4 S Rn:4 Rd:4 shift_amount:5 shift:2 0 Rm:4
+cond:4 00010 :2 0 :15 0 :4
+cond:4 000 opcode:4 S Rn:4 Rd:4 Rs:4 0 shift:2 1 Rm:4
+cond:4 00010 :2 0 :12 0 :2 1 :4
+cond:4 000 :17 1 :2 1 :4
+cond:4 001 opcode:4 S Rn:4 Rd:4 rotate:4 immediate:8
+cond:4 00110 :1 00 :20
+cond:4 00110 R 10 mask:4 sbo:4 rotate:4 immediate:8
+cond:4 010 P U B W L Rn:4 Rd:4 immediate:12
+cond:4 011 P U B W L Rn:4 Rd:4 shift_amount:5 shift:2 0 Rm:4
+cond:4 011 :20 1 :4
+cond:4 01111111 :12 1111 :4
+cond:4 100 P U S W L Rn:4 regs:16
+cond:4 101 L offset:24
+cond:4 110 P U N W L Rn:4 CRd:4 cp_num:4 offset:8
+cond:4 1110 opcode1:4 CRn:4 Rd:4 cp_num:4 opcode2:3 0 CRm:4
+cond:4 1110 opcode1:3 L CRn:4 Rd:4 cp_num:4 opcode2:3 1 CRm:4
+cond:4 1111 swi:24
+1111 :28

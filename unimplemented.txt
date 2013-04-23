@@ -1,0 +1,8 @@
+VE
+High vectors
+Imprecise abort
+Vectored interrupts
+Instructions: SRS, RFE, CPS, REV, REVSH, REV16
+Endianness
+Unaligned access support
+Jazelle
