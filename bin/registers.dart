@@ -1,4 +1,4 @@
-part of armem;
+part of darma;
 
 class RegisterFile {
   static const R0 = 0;

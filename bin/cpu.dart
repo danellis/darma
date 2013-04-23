@@ -1,4 +1,4 @@
-part of armem;
+part of darma;
 
 int rol(int n, int r) {
   return (n << r) | (n >> (32 - r));

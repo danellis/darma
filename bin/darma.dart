@@ -1,4 +1,4 @@
-library armem;
+library darma;
 
 import 'dart:typeddata';
 import 'dart:io';
