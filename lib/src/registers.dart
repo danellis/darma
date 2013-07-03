@@ -85,6 +85,23 @@ class RegisterFile {
   }
   
   void updateCpsr(int mask, int value) {
-    registers[CPSR] = (registers[CPSR] & mask) | value;
+    registers[CPSR] = (registers[CPSR] & ~mask) | value;
   }
+  
+  int get nFlag => (registers[CPSR] & (1 << 31)) >> 31;
+  int get zFlag => (registers[CPSR] & (1 << 30)) >> 30;
+  int get cFlag => (registers[CPSR] & (1 << 29)) >> 29;
+  int get vFlag => (registers[CPSR] & (1 << 28)) >> 28;
+  int get iFlag => (registers[CPSR] & (1 << 7)) >> 7;
+  int get fFlag => (registers[CPSR] & (1 << 6)) >> 6;
+  int get mode => registers[CPSR] & 0x1f;
+  int get spsr => registers[spsrMap[mode & 0xf]];
+
+  set nFlag(int value) => registers[CPSR] = (registers[CPSR] & ~(1 << 31)) | (value << 31);
+  set zFlag(int value) => registers[CPSR] = (registers[CPSR] & ~(1 << 30)) | (value << 30);
+  set cFlag(int value) => registers[CPSR] = (registers[CPSR] & ~(1 << 29)) | (value << 29);
+  set vFlag(int value) => registers[CPSR] = (registers[CPSR] & ~(1 << 28)) | (value << 28);
+  set iFlag(int value) => registers[CPSR] = (registers[CPSR] & ~(1 << 7)) | (value << 7);
+  set fFlag(int value) => registers[CPSR] = (registers[CPSR] & ~(1 << 6)) | (value << 6);
+  set cpsr(int status) => registers[CPSR] = status;
 }

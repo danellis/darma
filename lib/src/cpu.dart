@@ -137,7 +137,9 @@ class Cpu {
   /* Data processing immediate */
   void exec_type_5(int cond, int opcode, int s, int rn, int rd, int rotate, int imm) {
     print("exec_type_5: opcode=$opcode, s=$s, Rn=$rn, Rd=$rd, rotate=$rotate, imm=$imm");
-    dataProc(opcode, s, rd, rn, ror(imm, rotate << 1));
+    int operand = ror(imm, rotate << 1);
+    int carry = rotate == 0 ? reg.cFlag : (operand & 1 << 31) >> 31;
+    dataProc(opcode, s, rd, rn, operand, carry);
     reg[15] += 4;
   }
   
@@ -194,18 +196,37 @@ class Cpu {
     print("exec_type_18");
   }
   
-  void dataProc(int opcode, int s, int rd, int rn, int operand) {
+  void dataProc(int opcode, int s, int rd, int rn, int operand, int carry) {
     print("dataProc: opcode=$opcode, s=$s, Rd=$rd, Rn=$rn, operand=$operand");
     int result;
     
     switch (opcode) {
       case 0: // AND
-        result = reg[rn] & operand;
-        continue store;
+        int result = reg[rn] & operand;
+        reg[rd] = result;
+        if (s == 1) {
+          if (rd == 15) {
+            reg.cpsr = reg.spsr;
+          } else {
+            reg.nFlag = (result & (1 << 31)) >> 31;
+            reg.zFlag = result == 0 ? 1 : 0;
+            reg.cFlag = carry;
+          }
+        }
       
       case 1: // EOR
-        result = reg[rn] ^ operand;
-        continue store;
+        int result = reg[rn] ^ operand;
+        reg[rd] = result;
+        if (s == 1) {
+          if (rd == 15) {
+            reg.cpsr = reg.spsr;
+          } else {
+            reg.nFlag = (result & (1 << 31)) >> 31;
+            reg.zFlag = result == 0 ? 1 : 0;
+            reg.cFlag = result < 0 ? 1 : 0;
+            reg.vFlag = 
+          }
+        }
       
       case 2: // SUB
         result = reg[rn] - operand;
@@ -271,6 +292,8 @@ class Cpu {
   }
   
   void updateFlags(int result) {
+    reg.nFlag = (result & (1 << 31)) >> 31;
+    reg.zFlag = result == 0 ? 1 : 0;
     
   }
 }
